@@ -3,19 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductsByCategory } from "../features/productsSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import "./Category.css";
 
 interface Product {
   id: number;
   title: string;
   price: number;
   image: string;
-  // add other fields as needed
-}
-
-interface ProductsState {
-  items: Product[];
-  loading: boolean;
-  error: string | null;
 }
 
 const ITEMS_PER_PAGE = 6;
@@ -28,7 +22,7 @@ const Category = () => {
 
   useEffect(() => {
     if (name) dispatch(fetchProductsByCategory(name));
-    setCurrentPage(1); // reset page when category changes
+    setCurrentPage(1);
   }, [dispatch, name]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -40,34 +34,30 @@ const Category = () => {
   const goToNextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
-  if (loading) return <div className="p-4">Loading products...</div>;
-  if (error) return <div className="p-4 text-red-500">{error}</div>;
+  if (loading)
+    return <div className="category-loading">Loading products...</div>;
+  if (error) return <div className="category-error">{error}</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 capitalize">{name}</h2>
+    <div className="category-container">
+      <h2 className="category-title">{name}</h2>
       <AnimatePresence>
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          className="product-grid"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {paginatedItems.map((product: Product) => (
-            <div key={product.id} className="bg-white rounded shadow p-4">
+          {paginatedItems.map((product) => (
+            <div key={product.id} className="product-card">
               <img
                 src={product.image}
                 alt={product.title}
-                className="h-40 object-contain w-full mb-2"
+                className="product-image"
               />
-              <h3 className="text-md font-semibold truncate">
-                {product.title}
-              </h3>
-              <p className="text-sm text-gray-600">${product.price}</p>
-              <Link
-                to={`/product/${product.id}`}
-                className="text-blue-600 text-sm underline mt-2 inline-block"
-              >
+              <h3 className="product-name">{product.title}</h3>
+              <p className="product-price">${product.price}</p>
+              <Link to={`/product/${product.id}`} className="product-link">
                 View Details
               </Link>
             </div>
@@ -76,11 +66,11 @@ const Category = () => {
       </AnimatePresence>
 
       {totalPages > 1 && (
-        <div className="flex justify-center mt-6 space-x-2 items-center">
+        <div className="pagination">
           <button
             onClick={goToPreviousPage}
             disabled={currentPage === 1}
-            className="px-3 py-2 rounded-full font-medium border border-gray-300 hover:bg-blue-100 disabled:opacity-50"
+            className="page-button"
           >
             ◀ Prev
           </button>
@@ -88,11 +78,7 @@ const Category = () => {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 border ${
-                page === currentPage
-                  ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-blue-100"
-              }`}
+              className={`page-button ${page === currentPage ? "active" : ""}`}
             >
               {page}
             </button>
@@ -100,7 +86,7 @@ const Category = () => {
           <button
             onClick={goToNextPage}
             disabled={currentPage === totalPages}
-            className="px-3 py-2 rounded-full font-medium border border-gray-300 hover:bg-blue-100 disabled:opacity-50"
+            className="page-button"
           >
             Next ▶
           </button>

@@ -1,0 +1,50 @@
+.home-container {
+  padding: 20px;
+}
+
+.categories-scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.categories-slider {
+  display: flex;
+  justify-content: space-between; /* Spread cards across the width */
+  width: 100%;
+  gap: 0; /* Remove gap, spacing is handled by justify-content */
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0; /* Allow cards to grow/shrink equally */
+  max-width: 200px; /* Prevent cards from growing too large */
+  margin: 0 8px; /* Add horizontal margin for spacing */
+  border: none; /* Remove border entirely */
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+  min-height: 300px;
+}
+
+.category-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22); /* Stronger shadow on hover */
+  border: 1px solid #ccc; /* Show border only on hover */
+}
+
+.category-image {
+  width: 100%; /* Make the image responsive */
+  height: 200px; /* Increase image height for longer card */
+  object-fit: contain; /* Ensure image fits nicely */
+  border-radius: 4px;
+  border: none; /* Remove border from image */
+  background: transparent; /* Ensure image blends with background */
+}
+
+.category-name {
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+}

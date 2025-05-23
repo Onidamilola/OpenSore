@@ -3,7 +3,7 @@ import AppRoutes from "./routes/Approutes";
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900">
+    <div className="app-container">
       <AppRoutes />
     </div>
   );
