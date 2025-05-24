@@ -12,6 +12,9 @@
   font-size: 24px;
   font-weight: bold;
 }
+.logo:hover {
+  text-decoration: none;
+}
 
 .header-right {
   display: flex;

@@ -30,8 +30,12 @@ const Footer = () => {
         </div>
         <div className="footer-section">
           <h4 className="footer-title">Contact Us</h4>
-          <p>Email: info@openstore.com</p>
-          <p>Phone: +234 800 000 0000</p>
+          <p>
+            Email: <a href="mailto:info@openstore.com">info@openstore.com</a>
+          </p>
+          <p>
+            Phone: <a href="tel:+2348000000000">+234 800 000 0000</a>
+          </p>
         </div>
       </div>
       <div className="footer-bottom">
