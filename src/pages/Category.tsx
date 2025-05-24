@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductsByCategory } from "../features/productsSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Category.css";
+import LoadingRoller from "../component/LoadingRoller";
 
 interface Product {
   id: number;
@@ -34,8 +35,9 @@ const Category = () => {
   const goToNextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
-  if (loading)
-    return <div className="category-loading">Loading products...</div>;
+  if (loading) {
+    return <LoadingRoller text="Loading categories..." />;
+  }
   if (error) return <div className="category-error">{error}</div>;
 
   return (

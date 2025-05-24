@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchProductDetails } from "../features/productsSlice";
 import "./Product.css";
+import LoadingRoller from "../component/LoadingRoller";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +14,9 @@ const Product = () => {
     if (id) dispatch(fetchProductDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return <div className="product-loading">Loading product...</div>;
+  if (loading) {
+    return <LoadingRoller text="Loading categories..." />;
+  }
   if (error) return <div className="product-error">Error: {error}</div>;
   if (!product) return null;
 

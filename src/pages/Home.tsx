@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchCategories } from "../features/categoriesSlice";
 import { Link } from "react-router-dom";
 import Header from "../component/header/Header";
+import LoadingRoller from "../component/LoadingRoller";
 import "./Home.css";
 
 interface CategoryImageMap {
@@ -50,12 +51,7 @@ const Home = () => {
   }, [items]);
 
   if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="roller"></div>
-        <div className="loading-text">Loading categories...</div>
-      </div>
-    );
+    return <LoadingRoller text="Loading categories..." />;
   }
 
   if (error) return <div className="error">Error: {error}</div>;
