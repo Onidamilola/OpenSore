@@ -19,6 +19,7 @@ const Category = () => {
   const { name } = useParams<{ name: string }>();
   const dispatch = useAppDispatch();
   const { items, loading, error } = useAppSelector((state) => state.products);
+  const typedItems = items as Product[];
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -27,8 +28,11 @@ const Category = () => {
   }, [dispatch, name]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+  const paginatedItems = typedItems.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+  const totalPages = Math.ceil(typedItems.length / ITEMS_PER_PAGE);
 
   const goToPreviousPage = () =>
     setCurrentPage((prev) => Math.max(prev - 1, 1));
