@@ -1,5 +1,5 @@
 // components/Header.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./Header.css";
 
 const imageData = [
@@ -23,23 +23,28 @@ const imageData = [
 
 const Header = () => {
   const [index, setIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
+  const indexRef = useRef(index);
+
+  useEffect(() => {
+    indexRef.current = index;
+  }, [index]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setPrevIndex(index);
-      setIndex((prev) => (prev + 1) % imageData.length);
+      setIndex((prev) => {
+        const nextIndex = (prev + 1) % imageData.length;
+        return nextIndex;
+      });
       setIsSliding(true);
       setTimeout(() => setIsSliding(false), 500); // match CSS transition
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [index]);
+  }, []); // Only run once on mount
 
   const handleDotClick = (i: number) => {
     if (i !== index) {
-      setPrevIndex(index);
       setIndex(i);
       setIsSliding(true);
       setTimeout(() => setIsSliding(false), 500);
